@@ -11,7 +11,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  */
 @Configuration
 @ComponentScan(basePackages = "ru.dczm.judgeminator")
-@PropertySource({"resources/application.properties"})
 public class ApplicationContext {
 
 	@Bean

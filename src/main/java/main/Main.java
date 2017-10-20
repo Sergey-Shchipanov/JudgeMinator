@@ -28,20 +28,15 @@ public class Main {
         servletHolder.setAsyncSupported(true);
         servletHolder.setInitOrder(1);
 
-        // определяем стандартный фильтр Spring Security
-        FilterHolder filterHolder = new FilterHolder(new DelegatingFilterProxy("springSecurityFilterChain"));
-        filterHolder.setAsyncSupported(true);
-
         // определяем веб-контекст Jetty
         WebAppContext webAppContext = new WebAppContext();
         // указываем класс контекста приложения
         webAppContext.setInitParameter("contextConfigLocation", ApplicationContext.class.getName());
         // базовая папка проекта, где находится WEB-INF
-        webAppContext.setResourceBase("resource");
+        webAppContext.setResourceBase("resources/webapp");
         // назначаем стандартного слушателя, Context Path, созданные сервлет и фильтр
         webAppContext.addEventListener(new ContextLoaderListener(webContext));
         webAppContext.addServlet(servletHolder, "/");
-        webAppContext.addFilter(filterHolder, "/*", EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR));
 
         // запускаем сервер
         Server server = new Server(8080);
