@@ -1,17 +1,17 @@
-package domain;
+package ru.dczm.JudgeMinator.domain;
 
 /**
  * Created by SYShchipanov on 21.10.2017.
  */
-public class JudgeProfile {
+public class Order {
     private final long id;
     private final long userId;
-    private final long categoryId;
+    private final boolean approved;
 
-    public JudgeProfile(long id, long userId, long categoryId) {
+    public Order(long id, long userId, boolean approved) {
         this.id = id;
         this.userId = userId;
-        this.categoryId = categoryId;
+        this.approved = approved;
     }
 
     public long getId() {
@@ -22,7 +22,8 @@ public class JudgeProfile {
         return userId;
     }
 
-    public long getCategoryId() {
-        return categoryId;
+    public boolean isApproved() {
+        return approved;
     }
+
 }
