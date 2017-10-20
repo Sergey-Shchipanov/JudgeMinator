@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ru.dczm.judgeminator.iml" filepath="$PROJECT_DIR$/.idea/modules/ru.dczm.judgeminator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ru.dczm.judgeminator_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ru.dczm.judgeminator_main.iml" group="ru.dczm.judgeminator" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ru.dczm.judgeminator_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ru.dczm.judgeminator_test.iml" group="ru.dczm.judgeminator" />
+    </modules>
+  </component>
+</project>
