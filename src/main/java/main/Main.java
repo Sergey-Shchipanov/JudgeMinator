@@ -1,7 +1,16 @@
 package main;
 
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.FilterHolder;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.DispatcherType;
+import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.Properties;
 
@@ -11,11 +20,6 @@ import java.util.Properties;
 public class Main {
 
     public static void main(String... args) throws Exception {
-        Properties properties = new Properties();
-        // читаем файл конфигурации в переменную типа Properties
-        InputStream stream = Main.class.getResourceAsStream("/resources/application.properties");
-        properties.load(stream);
-        stream.close();
         AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
         webContext.register(WebContext.class);
 
@@ -36,7 +40,6 @@ public class Main {
         webAppContext.setResourceBase("resource");
         // назначаем стандартного слушателя, Context Path, созданные сервлет и фильтр
         webAppContext.addEventListener(new ContextLoaderListener(webContext));
-        webAppContext.setContextPath(properties.getProperty("base.url"));
         webAppContext.addServlet(servletHolder, "/");
         webAppContext.addFilter(filterHolder, "/*", EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR));
 

@@ -1,4 +1,4 @@
-package ru.dczm.JudgeMinator.domain;
+package domain;
 
 /**
  * Created by SYShchipanov on 21.10.2017.

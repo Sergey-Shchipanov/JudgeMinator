@@ -1,4 +1,4 @@
-package ru.dczm.JudgeMinator.domain;
+package domain;
 
 import java.util.List;
 
