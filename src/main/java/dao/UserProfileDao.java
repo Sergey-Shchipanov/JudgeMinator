@@ -1,7 +1,10 @@
 package dao;
 
+import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import domain.UserProfile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,17 +13,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserProfileDao {
 
-    //private final MongoCollection<UserProfile> collection;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     public UserProfileDao() {
-        //this.collection = collection;
+        System.out.println("DAO");
     }
 
-    public UserProfile findOne(long id) {
-        return null;
+    final String COLLECTION = "cars";
+
+    public void create(UserProfile userProfile) {
+        mongoTemplate.insert(userProfile);
     }
 
-    public void insert(UserProfile profile) {
-
+    public UserProfile find(long id) {
+        return mongoTemplate.findById(id, UserProfile.class);
     }
+
 }

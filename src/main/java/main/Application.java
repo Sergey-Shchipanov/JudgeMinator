@@ -1,6 +1,7 @@
 package main;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
 /**
  * @author anshipanov
@@ -8,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Application {
 
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app.xml");
+        AbstractApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
         context.registerShutdownHook();
     }
 }

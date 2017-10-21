@@ -15,10 +15,10 @@ public class UserProfileService {
     private UserProfileDao userProfileDao;
 
     public UserProfile find(long id) {
-        return userProfileDao.findOne(id);
+        return userProfileDao.find(id);
     }
 
     public void insert(UserProfile profile) {
-        userProfileDao.insert(profile);
+        userProfileDao.create(profile);
     }
 }

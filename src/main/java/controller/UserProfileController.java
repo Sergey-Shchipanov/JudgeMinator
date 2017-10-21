@@ -6,6 +6,7 @@ import dto.UserProfileTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import service.UserProfileService;
 
@@ -20,10 +21,11 @@ public class UserProfileController {
 
     @GetMapping("/user/{profileId}")
     public UserProfileTo find(@PathVariable long profileId) {
+        System.out.println("invoked");
         return new UserProfileTo(userProfileService.find(profileId));
     }
 
-    @GetMapping("user/insert/{profileId}")
+    @PostMapping("user/insert/{profileId}")
     public ResultTo insert(@PathVariable long profileId) {
         userProfileService.insert(new UserProfile(
                 profileId,
