@@ -1,5 +1,6 @@
 package controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import domain.UserProfile;
 import dto.ResultTo;
 import dto.UserProfileTo;
@@ -20,13 +21,13 @@ public class UserProfileController {
     private UserProfileService userProfileService;
 
     @GetMapping("/user/{profileId}")
-    public UserProfileTo find(@PathVariable long profileId) {
+    public UserProfileTo find(@PathVariable long profileId) throws JsonProcessingException {
         System.out.println("invoked");
         return new UserProfileTo(userProfileService.find(profileId));
     }
 
     @GetMapping("user/insert/{profileId}")
-    public ResultTo insert(@PathVariable long profileId) {
+    public ResultTo insert(@PathVariable long profileId) throws JsonProcessingException {
         userProfileService.insert(new UserProfile(
                 profileId,
                 "ЗАЛУПА",

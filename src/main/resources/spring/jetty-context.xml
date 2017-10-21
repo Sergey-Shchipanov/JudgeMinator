@@ -3,7 +3,7 @@
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="server"
+    <bean _id="server"
           name="Main"
           class="org.eclipse.jetty.server.Server"
           init-method="start"
@@ -21,7 +21,7 @@
             </bean>
         </constructor-arg>
         <property name="connectors">
-            <bean id="connector" class="org.eclipse.jetty.server.ServerConnector">
+            <bean _id="connector" class="org.eclipse.jetty.server.ServerConnector">
                 <constructor-arg ref="server"/>
                 <constructor-arg name="acceptors" value="20"/>
                 <constructor-arg name="selectors" value="20"/>

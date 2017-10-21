@@ -158,7 +158,7 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>copy-dependencies</id>
+                        <_id>copy-dependencies</_id>
                         <phase>compile</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
@@ -177,7 +177,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>copy-webapp-directory</id>
+                        <_id>copy-webapp-directory</_id>
                         <phase>compile</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -198,14 +198,14 @@
 
     <repositories>
         <repository>
-            <id>spring-releases</id>
+            <_id>spring-releases</_id>
             <name>Spring Releases</name>
             <url>https://repo.spring.io/libs-release</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>spring-releases</id>
+            <_id>spring-releases</_id>
             <name>Spring Releases</name>
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>

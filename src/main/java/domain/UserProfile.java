@@ -9,22 +9,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "profiles")
 public class UserProfile {
     @Id
-    private final long id;
+    private final long _id;
     private final String name;
     private final String lastName;
     private final String city;
     private final String club;
 
-    public UserProfile(long id, String name, String lastName, String city, String club) {
-        this.id = id;
+    public UserProfile(long _id, String name, String lastName, String city, String club) {
+        this._id = _id;
         this.name = name;
         this.lastName = lastName;
         this.city = city;
         this.club = club;
     }
 
-    public long getId() {
-        return id;
+    public long get_id() {
+        return _id;
     }
 
     public String getName() {

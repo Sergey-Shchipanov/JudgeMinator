@@ -24,4 +24,9 @@ public class MongoConfiguration {
     public MongoTemplate mongoTemplate() throws Exception {
         return new MongoTemplate(mongoDbFactory());
     }
+
+    @Bean
+    public MongoClient mongoClient() throws Exception {
+        return new MongoClient( "localhost" , 27017 );
+    }
 }

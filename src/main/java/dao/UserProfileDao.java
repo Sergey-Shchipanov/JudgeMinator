@@ -1,16 +1,14 @@
 package dao;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
 import domain.UserProfile;
 import org.mongojack.JacksonDBCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.net.UnknownHostException;
+import utils.MongoCollectionJudgeMinator;
 
 /**
  * @author anshipanov
@@ -19,29 +17,20 @@ import java.net.UnknownHostException;
 public class UserProfileDao {
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    private final MongoClient mongoClient;
+
+    private MongoCollectionJudgeMinator<Long, UserProfile> collectionJudgeMinator;
 
     public UserProfileDao() {
+        collectionJudgeMinator = new MongoCollectionJudgeMinator<Long, UserProfile>(mongoClient.getDatabase("jack").getCollection("test"));
         System.out.println("DAO");
     }
 
-    public void create(UserProfile userProfile) {
-        DBCollection dbCollection = getCollection();
-        JacksonDBCollection<UserProfile, String> coll = JacksonDBCollection.wrap(dbCollection, UserProfile.class,
-                String.class);
-        coll.insert(userProfile);
+    public void create(UserProfile userProfile) throws JsonProcessingException {
+        collectionJudgeMinator.insert(userProfile);
     }
 
-    public UserProfile find(long id) {
-        return mongoTemplate.findById(id, UserProfile.class);
+    public UserProfile find(long id) throws JsonProcessingException {
+        return (UserProfile) collectionJudgeMinator.find(id);
     }
-
-    private static DBCollection getCollection() {
-        MongoClient mongoClient = null;
-        mongoClient = new MongoClient( "localhost" , 27017 );
-        DB db = mongoClient.getDB( "jack" );
-        DBCollection dbCollection = db.getCollection("test");
-        return dbCollection;
-    }
-
 }
