@@ -10,14 +10,16 @@ public class Match {
     private final long winnerId;
     private final String videoUrl;
     private final long judgeId;
+    private final long resultId;
 
-    public Match(long id, long firstMemberId, long secondMemberId, long winnerId, String videoUrl, long judgeId) {
+    public Match(long id, long firstMemberId, long secondMemberId, long winnerId, String videoUrl, long judgeId, long resultId) {
         this.id = id;
         this.firstMemberId = firstMemberId;
         this.secondMemberId = secondMemberId;
         this.winnerId = winnerId;
         this.videoUrl = videoUrl;
         this.judgeId = judgeId;
+        this.resultId = resultId;
     }
 
     public long getId() {
@@ -38,6 +40,10 @@ public class Match {
 
     public String getVideoUrl() {
         return videoUrl;
+    }
+
+    public long getResultId() {
+        return resultId;
     }
 
     public long getJudgeId() {
