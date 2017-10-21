@@ -25,7 +25,7 @@ public class UserProfileController {
         return new UserProfileTo(userProfileService.find(profileId));
     }
 
-    @PostMapping("user/insert/{profileId}")
+    @GetMapping("user/insert/{profileId}")
     public ResultTo insert(@PathVariable long profileId) {
         userProfileService.insert(new UserProfile(
                 profileId,

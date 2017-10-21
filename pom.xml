@@ -135,6 +135,11 @@
             <version>${jodatime.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.mongojack</groupId>
+            <artifactId>mongojack</artifactId>
+            <version>2.3.0</version>
+        </dependency>
     </dependencies>
 
     <build>
