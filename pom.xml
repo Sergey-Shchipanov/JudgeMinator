@@ -20,6 +20,7 @@
         <start-class>main.Main</start-class>
         <jetty.version>9.3.7.v20160115</jetty.version>
         <jodatime.version>2.9.2</jodatime.version>
+        <springfox.swagger.version>2.4.0</springfox.swagger.version>
     </properties>
 
     <dependencies>
@@ -136,10 +137,61 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mongojack</groupId>
-            <artifactId>mongojack</artifactId>
-            <version>2.3.0</version>
+            <groupId>de.undercouch</groupId>
+            <artifactId>bson4jackson</artifactId>
+            <version>2.7.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox.swagger.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjweaver</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox.swagger.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -158,7 +210,7 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <_id>copy-dependencies</_id>
+                        <id>copy-dependencies</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
@@ -177,7 +229,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <_id>copy-webapp-directory</_id>
+                        <id>copy-webapp-directory</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -191,6 +243,23 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>unpack-swagger-ui</id>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>ru.yandex.kino</groupId>
+                                    <artifactId>swagger-ui</artifactId>
+                                    <version>2.1.11</version>
+                                    <type>jar</type>
+                                    <overWrite>false</overWrite>
+                                    <includes>**/*</includes>
+                                    <outputDirectory>${project.build.directory}/classes/webapp/</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
@@ -198,14 +267,19 @@
 
     <repositories>
         <repository>
-            <_id>spring-releases</_id>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>http://central.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>spring-releases</id>
             <name>Spring Releases</name>
             <url>https://repo.spring.io/libs-release</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <_id>spring-releases</_id>
+            <id>spring-releases</id>
             <name>Spring Releases</name>
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
