@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource({"classpath:app.xml"})
 @Import({
         MongoConfiguration.class,
+        SwaggerConfiguration.class,
 })
 public class AppConfiguration {
 }
