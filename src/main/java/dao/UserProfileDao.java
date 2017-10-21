@@ -1,8 +1,12 @@
 package dao;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mongodb.client.FindIterable;
 import domain.UserProfile;
 import utils.MongoCollectionX;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author anshipanov
@@ -15,11 +19,28 @@ public class UserProfileDao {
         this.collectionJudgeMinator = collectionJudgeMinator;
     }
 
-    public void create(UserProfile userProfile) throws JsonProcessingException {
+    public void create(UserProfile userProfile) {
         collectionJudgeMinator.insert(userProfile);
     }
 
-    public UserProfile find(long id) throws JsonProcessingException {
+    public Optional<UserProfile> find(long id) {
         return collectionJudgeMinator.find(id);
+    }
+
+    public void deleteById(long id) {
+        collectionJudgeMinator.delete(id);
+    }
+
+    public Optional<UserProfile> updateUserProfile(long userId, UserProfile newProfile) {
+        return collectionJudgeMinator.update(userId, newProfile);
+    }
+
+    public List<UserProfile> findAll() {
+        FindIterable<UserProfile> profiles = collectionJudgeMinator.findAll();
+        List<UserProfile> result = new ArrayList<>();
+        for (UserProfile profile : profiles) {
+            result.add(profile);
+        }
+        return result;
     }
 }

@@ -6,6 +6,8 @@ import domain.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author anshipanov
  */
@@ -15,7 +17,7 @@ public class UserProfileService {
     @Autowired
     private UserProfileDao userProfileDao;
 
-    public UserProfile find(long id) throws JsonProcessingException {
+    public Optional<UserProfile> find(long id) throws JsonProcessingException {
         return userProfileDao.find(id);
     }
 
