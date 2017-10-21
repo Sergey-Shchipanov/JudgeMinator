@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AppController {
 
-    @GetMapping("/app")
+    @GetMapping("/")
     public ResultTo get() {
         return new ResultTo(true);
     }
