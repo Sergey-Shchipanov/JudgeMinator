@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="server"
+          name="Main"
+          class="org.eclipse.jetty.server.Server"
+          init-method="start"
+          destroy-method="stop">
+        <constructor-arg>
+            <bean class="org.eclipse.jetty.util.thread.QueuedThreadPool">
+                <constructor-arg name="maxThreads" value="2000"/>
+                <constructor-arg name="minThreads" value="200"/>
+                <constructor-arg name="idleTimeout" value="30000"/>
+                <constructor-arg name="queue">
+                    <bean class="java.util.concurrent.ArrayBlockingQueue">
+                        <constructor-arg value="10000"/>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <property name="connectors">
+            <bean id="connector" class="org.eclipse.jetty.server.ServerConnector">
+                <constructor-arg ref="server"/>
+                <constructor-arg name="acceptors" value="20"/>
+                <constructor-arg name="selectors" value="20"/>
+                <property name="port" value="8080"/>
+                <property name="idleTimeout" value="1000"/>
+                <!--<property name="responseBufferSize" value="1048576"/>-->
+            </bean>
+        </property>
+        <property name="handler">
+            <bean class="org.eclipse.jetty.server.handler.HandlerCollection">
+                <property name="handlers">
+                    <bean class="org.eclipse.jetty.webapp.WebAppContext">
+                        <property name="contextPath" value="/"/>
+                        <property name="war" value="src/main/webapp"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+</beans>
