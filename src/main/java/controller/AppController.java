@@ -12,7 +12,6 @@ public class AppController {
 
     @GetMapping("/app")
     public ResultTo get() {
-
         return new ResultTo(true);
     }
 }

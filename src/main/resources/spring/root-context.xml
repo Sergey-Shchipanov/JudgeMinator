@@ -9,11 +9,8 @@
 
     <context:spring-configured/>
     <context:annotation-config/>
-    <context:component-scan base-package="
-            controller,
-            dao,
-            service
-            ">
+    <context:component-scan base-package="dao, service">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
 </beans>

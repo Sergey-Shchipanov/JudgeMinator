@@ -1,30 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean class="org.eclipse.jetty.server.Server" init-method="start" destroy-method="stop">
-        <property name="threadPool">
-            <bean id="ThreadPool" class="org.eclipse.jetty.util.thread.QueuedThreadPool">
-                <property name="minThreads" value="10" />
-                <property name="maxThreads" value="50" />
-            </bean>
+    <bean id="jackson2MessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="objectMapper" ref="objectMapperFactory"/>
+    </bean>
+
+    <bean id="objectMapperFactory" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
+          primary="true">
+        <property name="objectMapper" ref="primaryObjectMapper"/>
+        <property name="featuresToDisable">
+            <array>
+                <util:constant
+                        static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS"/>
+                <util:constant
+                        static-field="com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES"/>
+                <util:constant
+                        static-field="com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES"/>
+                <util:constant
+                        static-field="com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS"/>
+            </array>
         </property>
-
-        <property name="connectors">
-            <list>
-                <bean id="Connector" class="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                    <property name="port" value="8080" />
-                </bean>
-            </list>
+        <property name="modules">
+            <util:list>
+                <bean class="com.fasterxml.jackson.datatype.jdk8.Jdk8Module"/>
+                <bean class="com.fasterxml.jackson.datatype.jsr310.JavaTimeModule"/>
+            </util:list>
         </property>
+        <property name="serializationInclusion" value="NON_NULL"/>
+    </bean>
 
-        <property name="handler">
-            <bean class="org.eclipse.jetty.webapp.WebAppContext">
-                <property name="contextPath" value="/" />
-                <property name="war" value="src/main/webapp" />
-            </bean>
+    <bean id="primaryObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+        <property name="visibility"
+                  value="#{primaryObjectMapper.visibilityChecker
+                      .withFieldVisibility(T(com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility).ANY)
+                  }"/>
+    </bean>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <ref bean="jackson2MessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <mvc:resources mapping="/**" location="/,classpath:/META-INF/resources/"/>
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="controller" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+    </bean>
+
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="defaultContentType" value="application/json"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+            </map>
         </property>
+    </bean>
 
+    <mvc:view-controller path="/" view-name="index"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="0"/>
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".html"/>
+        <property name="viewNames">
+            <value>index</value>
+        </property>
+        <property name="contentType" value="text/html"/>
     </bean>
 </beans>
