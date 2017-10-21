@@ -6,9 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Created by SYShchipanov on 21.10.2017.
  */
-@Document(collection = "profiles")
 public class UserProfile {
-    @Id
     private final long _id;
     private final String name;
     private final String lastName;

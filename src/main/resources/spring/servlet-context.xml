@@ -7,12 +7,12 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean _id="jackson2MessageConverter"
+    <bean id="jackson2MessageConverter"
           class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
         <property name="objectMapper" ref="objectMapperFactory"/>
     </bean>
 
-    <bean _id="objectMapperFactory" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
+    <bean id="objectMapperFactory" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
           primary="true">
         <property name="objectMapper" ref="primaryObjectMapper"/>
         <property name="featuresToDisable">
@@ -36,7 +36,7 @@
         <property name="serializationInclusion" value="NON_NULL"/>
     </bean>
 
-    <bean _id="primaryObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+    <bean id="primaryObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
         <property name="visibility"
                   value="#{primaryObjectMapper.visibilityChecker
                       .withFieldVisibility(T(com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility).ANY)
@@ -62,7 +62,7 @@
         <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
     </bean>
 
-    <bean _id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
         <property name="ignoreAcceptHeader" value="true"/>
         <property name="defaultContentType" value="application/json"/>
         <property name="mediaTypes">

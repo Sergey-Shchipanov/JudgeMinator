@@ -1,29 +1,18 @@
 package dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
 import domain.UserProfile;
-import org.mongojack.JacksonDBCollection;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Repository;
-import utils.MongoCollectionJudgeMinator;
+import utils.MongoCollectionX;
 
 /**
  * @author anshipanov
  */
-@Repository
 public class UserProfileDao {
 
-    @Autowired
-    private final MongoClient mongoClient;
+    private MongoCollectionX<Long, UserProfile> collectionJudgeMinator;
 
-    private MongoCollectionJudgeMinator<Long, UserProfile> collectionJudgeMinator;
-
-    public UserProfileDao() {
-        collectionJudgeMinator = new MongoCollectionJudgeMinator<Long, UserProfile>(mongoClient.getDatabase("jack").getCollection("test"));
-        System.out.println("DAO");
+    public UserProfileDao(MongoCollectionX<Long, UserProfile> collectionJudgeMinator) {
+        this.collectionJudgeMinator = collectionJudgeMinator;
     }
 
     public void create(UserProfile userProfile) throws JsonProcessingException {
@@ -31,6 +20,6 @@ public class UserProfileDao {
     }
 
     public UserProfile find(long id) throws JsonProcessingException {
-        return (UserProfile) collectionJudgeMinator.find(id);
+        return collectionJudgeMinator.find(id);
     }
 }

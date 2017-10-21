@@ -26,7 +26,7 @@ public class UserProfileController {
         return new UserProfileTo(userProfileService.find(profileId));
     }
 
-    @GetMapping("user/insert/{profileId}")
+    @PostMapping("user/insert/{profileId}")
     public ResultTo insert(@PathVariable long profileId) throws JsonProcessingException {
         userProfileService.insert(new UserProfile(
                 profileId,
